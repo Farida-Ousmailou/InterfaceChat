@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Log In</title>
+		<link rel="stylesheet" href="styles.css">
+
+  </head>
+  <body>
+		<div class="container-signin__form">
+			<div class="form-user__registration">
+					<h1 class="general__title">Log In !</h1>
+					<div class="menu__option">
+						<input class="option__input" type="email" id="mail" placeholder="Email" name="user_email">
+					</div>
+					<div class="menu__option">
+						<input class="option__input" type="password" id="password" placeholder="Password" name="user_password">
+					</div>
+					</div>
+				<div class="login-logout-router__button">
+					<button onclick="processForm(mail, password)">
+						<a href="/accueil.html">
+						LogIN
+					</a>
+					</button>
+				</div>
+			</div>
+		</div>
+  </body>
+</html>
+
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+<script>
+let isConnected = false;
+
+async function processForm(mail, password) {
+ try  {
+	 let userMail = document.getElementById("mail").value;
+	 let userPassword = document.getElementById("password").value;
+	 console.log(userMail, userPassword);
+	 await logIn(userMail, userPassword); 
+	 console.log('logIn successful');
+
+ } catch (error) {
+	 console.log('errosdfdfr');
+ }
+}
+
+async function logIn (mail, password) {
+	try {
+		const response = await axios.post('http://localhost:3000/login',
+		{
+			mail: mail,
+			password: password,
+		});
+		const jwtToken = response.data.token;
+		//const storedAuthData = localStorage.setItem('jwtToken');
+		if(jwtToken){
+			isConnected = true;
+			console.log('your token', jwtToken);
+		} else {
+			console.error(`not token here`);
+		}
+	} catch (error) {
+		console.log(error)
+		console.log("catch error")
+	}
+}
+</script>
