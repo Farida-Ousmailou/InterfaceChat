@@ -22,6 +22,7 @@ app.use(bodyParser.json());
 function startServer() {
 	console.log("startServer ")
 	app.use("/", router)
+	init_database()
 	const server = createServer(app)
 
 	server.listen(PORT, () => { console.log(`Listen ${PORT}`) })
