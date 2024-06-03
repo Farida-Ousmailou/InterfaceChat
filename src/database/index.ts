@@ -29,6 +29,23 @@ export function init_database() {
           console.log("table messages created");
       })
       
+       let sql3 = `
+      CREATE TABLE IF NOT EXISTS channels (
+          id INT AUTO_INCREMENT PRIMARY KEY,
+          name VARCHAR(255),
+          type_channel VARCHAR(255),
+          created_at DATE,
+          message_id INT,
+          user_id INT,
+          FOREIGN KEY (message_id) REFERENCES messages(id),
+          FOREIGN KEY (user_id) REFERENCES users(id)
+      )
+      `;
+      
+      connection.query(sql3, function (err: any) {
+          if (err) throw err;
+          console.log("table channels created");
+      })
 
       connection.end((error) => {
         if (error) {
